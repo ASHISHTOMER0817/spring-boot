@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediBot — Disease Awareness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ========== APP SHELL ========== -->
+  <div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-brand">
+        <div class="header-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="8" y="2" width="4" height="16" rx="2" fill="white"/>
+            <rect x="2" y="8" width="16" height="4" rx="2" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="header-title">MediBot</div>
+          <div class="header-subtitle">Disease Awareness Assistant</div>
+        </div>
+      </div>
+      <button class="btn-signup" id="openSignup">Sign Up Free</button>
+    </header>
+
+    <!-- CHAT WINDOW -->
+    <main class="chat-window" id="chatWindow" role="log" aria-live="polite" aria-label="Chat messages">
+
+      <!-- Welcome state (shown until first message) -->
+      <div class="chat-welcome" id="chatWelcome">
+        <div class="chat-welcome-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="12" stroke="#3a7bd5" stroke-width="2"/>
+            <rect x="12" y="7" width="4" height="10" rx="2" fill="#3a7bd5"/>
+            <circle cx="14" cy="20.5" r="2" fill="#3a7bd5"/>
+          </svg>
+        </div>
+        <h2>Ask me anything</h2>
+        <p>I can help you understand diseases, symptoms, prevention tips, and more.</p>
+        <div class="suggestion-chips" id="suggestionChips">
+          <button class="chip" data-query="What are the symptoms of diabetes?">Diabetes symptoms</button>
+          <button class="chip" data-query="How to prevent hypertension?">Prevent hypertension</button>
+          <button class="chip" data-query="What is malaria?">About malaria</button>
+          <button class="chip" data-query="How do vaccines work?">How vaccines work</button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- INPUT BAR -->
+    <footer class="input-bar">
+      <div class="input-inner">
+        <textarea
+          class="input-field"
+          id="msgInput"
+          rows="1"
+          placeholder="Ask about a disease, symptom, or health tip…"
+          aria-label="Message input"
+        ></textarea>
+        <button class="btn-send" id="sendBtn" aria-label="Send message" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 14L14 8L2 2V7L10 8L2 9V14Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-hint">MediBot is for awareness only — not a substitute for medical advice.</p>
+    </footer>
+
+  </div><!-- /app-shell -->
+
+  <!-- ========== SIGN UP OVERLAY ========== -->
+  <div class="overlay" id="signupOverlay" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+    <div class="modal">
+      <button class="modal-close" id="closeSignup" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <h2 id="signupTitle">Create account</h2>
+        <p>Get personalised health tips and save your chat history.</p>
+      </div>
+      <form id="signupForm" novalidate>
+        <div class="form-group" id="fg-name">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" class="form-input" placeholder="Jane Doe" autocomplete="name" />
+          <span class="form-error">Please enter your name.</span>
+        </div>
+        <div class="form-group" id="fg-email">
+          <label for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" class="form-input" placeholder="jane@example.com" autocomplete="email" />
+          <span class="form-error">Please enter a valid email.</span>
+        </div>
+        <div class="form-group" id="fg-password">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" class="form-input" placeholder="Min. 8 characters" autocomplete="new-password" />
+          <span class="form-error">Password must be at least 8 characters.</span>
+        </div>
+        <button type="submit" class="btn-primary" id="signupSubmit">Create Account</button>
+      </form>
+      <div class="modal-footer">
+        Already have an account? <a id="switchToLogin">Log in</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
