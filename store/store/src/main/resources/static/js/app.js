@@ -14,21 +14,27 @@
    ============================================================ */
 const API = (() => {
   async function sendMessage(userText) {
-      console.log("hello word");
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-            "message": userText
-      }),
-    });
 
-    const data = await response.json();
-    console.log(data);
+    let data;
+      try{
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+                "message": userText
+          }),
+        });
+
+        data = await response.text();
+        console.log("data is here", data);
+
+      }catch(a){
+        console.log(a);
+      }
+
     return data;
-    
   }
 
   return { sendMessage };
@@ -58,6 +64,8 @@ const Chat = (() => {
   }
 
   function _createBubble(text) {
+    console.log("reached here");
+    console.log("this is text: ", text);
     const el = document.createElement("div");
     el.className = "msg-bubble";
     el.textContent = text;
@@ -307,6 +315,7 @@ const Toast = (() => {
 
     try {
       const reply = await API.sendMessage(text);
+      console.log("so this is reply", reply);
       Chat.removeTyping();
       Chat.appendMessage("bot", reply);
     } catch (err) {
