@@ -2,13 +2,24 @@ package com.codewithAshish.service;
 
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GenerateTextFromTextInput {
-
-	public Client client = Client.builder().apiKey("AIzaSyAPnB7SSfmCCkaUSKkHo-aArWzQNDY-Vrs").build();
-  
+	private final Client client;
+	GenerateTextFromTextInput(@Value("${gemini.api.key}") String apiKey){
+		client = Client.builder().apiKey(apiKey).build();
+	}
 	public String prompt(String prompt){
-		GenerateContentResponse response = client.models.generateContent("gemini-3-flash-preview",prompt,null);
-	return response.text();
-}
+		
+		try{
+			GenerateContentResponse response = client.models.generateContent("gemini-3-flash-preview",prompt,null);
+			return response.text();
+
+		}catch(Exception e){
+			e.printStackTrace();
+			return "Something went wrong";
+		}
+	}
 }
