@@ -1,5 +1,6 @@
 package com.codewithAshish.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +19,19 @@ public class chatController{
       }
 
       @PostMapping("/api/chat")
-      public String chat(@RequestBody Map<String, String> body){
-      
-            String userMessage = body.get("message");
+      public String chat(@RequestBody Map<String, List<Map<String, String>>> body){
+            
+            List<Map<String, String>> messages = body.get("messages");
 
-            System.out.println(userMessage);
-            String str = service.prompt(userMessage);
+            StringBuilder sb = new StringBuilder();
+            for(Map<String, String> message: messages){
+                  sb.append(message.get("user"));
+                  sb.append(": ");
+                  sb.append(message.get("content"));
+                  sb.append("\n");
+            }
+            String str = service.prompt(sb.toString());
+            System.out.println(str);
             return str;
       }   
 

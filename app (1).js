@@ -10,15 +10,9 @@
 /* ============================================================
    1. API MODULE
    ============================================================ */
-
-const messages = [];
-
-
-
 const API = (() => {
   async function sendMessage(userText) {
 
-    messages.push({user: userText, content: ""});
     let data;
       try{
         const response = await fetch("/api/chat", {
@@ -27,13 +21,12 @@ const API = (() => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-                messages
+                "message": userText
           }),
         });
 
         data = await response.text();
         console.log("data is here", data);
-        messages[messages.length -1].content = data;
 
       }catch(a){
         console.log(a);
@@ -73,7 +66,7 @@ const Chat = (() => {
     console.log("this is text: ", text);
     const el = document.createElement("div");
     el.className = "msg-bubble";
-    el.innerHTML = marked.parse(text);
+    el.textContent = text;
     return el;
   }
 
